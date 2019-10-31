@@ -1,0 +1,90 @@
+@import "variables";
+
+.FacultySummary {
+  position: relative;
+  display: flex;
+  width: 320px;
+  height: 180px;
+  flex-shrink: 0;
+  margin: 12px;
+  box-shadow: 0 0 8px $color-shadow;
+  background-color: $color-card;
+  color: $color-font;
+  cursor: pointer;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 4px solid $color-primary;
+    opacity: 0;
+    transition: all .2s;
+  }
+
+  &:hover,
+  &.selected {
+    &:after {
+      opacity: 1;
+    }
+  }
+
+  .photo {
+    width: 120px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .info {
+    flex: 1;
+    padding: 8px 12px;
+    overflow: hidden;
+
+    .name {
+      font-weight: bold;
+    }
+
+    .organization {
+      font-size: $font-smaller;
+      margin-bottom: 8px;
+    }
+
+    .row {
+      display: flex;
+      align-items: flex-start;
+      font-size: $font-smaller;
+      margin-bottom: 4px;
+
+      .icon {
+        margin-top: 2px;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  &.minimal {
+    width: 200px;
+    height: 56px;
+    margin: 8px;
+
+    .photo {
+      width: 43px;
+    }
+
+    .info {
+      min-width: 0;
+
+      .organization {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .row {
+        display: none;
+      }
+    }
+  }
+}

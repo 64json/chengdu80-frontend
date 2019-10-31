@@ -1,0 +1,169 @@
+@import "variables";
+
+.Proposal {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+
+  &.expanded {
+    .body {
+      display: flex;
+    }
+  }
+
+  .titleBar {
+    display: flex;
+    padding: 32px;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid $color-background;
+    box-shadow: 0 0 8px rgba($color-shadow, .5);
+
+    .title {
+      flex: 1;
+      font-size: $font-medium;
+      font-weight: bold;
+    }
+
+    .state {
+      margin-right: 16px;
+      color: $color-primary;
+      font-weight: bold;
+    }
+  }
+
+  .body {
+    display: none;
+    align-items: stretch;
+    border-bottom: 1px solid $color-background;
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 32px;
+
+      .tabContainer {
+        display: flex;
+        margin-bottom: 16px;
+
+        .tab {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          padding: 8px;
+          margin-top: -8px;
+          font-weight: bold;
+          cursor: pointer;
+          border-bottom: 2px solid $color-font;
+
+          &.selected {
+            color: $color-primary;
+            border-bottom-color: $color-primary;
+          }
+        }
+      }
+
+      .input {
+        margin-bottom: 8px;
+      }
+
+      .divider {
+        height: 2px;
+        background-color: $color-font;
+        margin: 16px;
+      }
+
+      .sectionTitle {
+        font-weight: bold;
+        align-self: center;
+        margin-bottom: 16px;
+        font-size: $font-medium;
+      }
+
+      .question {
+        margin-bottom: 16px;
+      }
+
+      .buttonContainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 16px;
+
+        .button {
+          flex: 1;
+          margin-right: 16px;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+
+    .researcherContainer {
+      display: flex;
+      flex-direction: column;
+      margin-right: 24px;
+      margin-bottom: 32px;
+      margin-top: 32px;
+
+      .status {
+        width: 432px;
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+
+        &.dim {
+          opacity: .3;
+        }
+
+        .label {
+          width: 100%;
+          color: $color-primary;
+          font-weight: bold;
+          margin-left: 8px;
+        }
+
+        .propose {
+          position: relative;
+          display: flex;
+          align-items: stretch;
+          width: 200px;
+          height: 56px;
+          margin: 8px;
+          cursor: pointer;
+          box-shadow: 0 0 8px $color-shadow;
+
+          &:hover {
+            .text {
+              background-color: $color-primary;
+              color: $color-background;
+            }
+          }
+
+          .icon {
+            width: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: $color-primary;
+            color: $color-background;
+          }
+
+          .text {
+            padding: 8px 12px;
+            flex: 1;
+            font-size: $font-small;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            background-color: $color-card;
+          }
+        }
+      }
+    }
+  }
+}

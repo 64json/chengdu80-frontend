@@ -1,0 +1,23 @@
+@import "variables";
+
+.SignIn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+  .input {
+    font-size: $font-small;
+    width: 240px;
+    margin-top: 8px;
+  }
+
+  .button {
+    font-size: $font-small;
+    padding: .5em .8em;
+    width: 240px;
+    margin-top: 16px;
+    margin-bottom: 40px;
+  }
+}

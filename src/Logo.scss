@@ -1,0 +1,17 @@
+@import "variables";
+
+.Logo {
+  font-weight: bold;
+  font-size: $font-large;
+  pointer-events: auto;
+  padding: 16px;
+  color: $color-font;
+
+  .highlight {
+    background-color: $color-primary;
+    border-radius: 8px;
+    padding: 4px;
+    margin: 4px;
+    color: $color-background !important;
+  }
+}

@@ -1,0 +1,71 @@
+@import "variables";
+
+@font-face {
+  font-family: 'DIN Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://cdn.robinhood.com/assets/generated_assets/86fda98796bb4100ba905535a77723bd.otf) format("opentype");
+}
+
+@font-face {
+  font-family: 'DIN Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://cdn.robinhood.com/assets/generated_assets/05078759185c986d15c17e7ee8deff43.otf) format("opentype");
+}
+
+body {
+  margin: 0;
+  font-family: "DIN Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  * {
+    transition: all .2s;
+    box-sizing: border-box;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  input {
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
+    background: none;
+    outline: none;
+    margin: 0;
+    border: 2px solid rgba($color-font, .5);
+    font-size: $font-small;
+    padding: .5em .8em;
+
+    &:hover,
+    &:focus,
+    &:not([value=""]) {
+      border-color: rgba($color-font, 1);
+    }
+
+    &::placeholder {
+    }
+  }
+
+  .button {
+    padding: .5em .8em;
+    text-align: center;
+    background-color: $color-primary;
+    color: $color-background;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.secondary {
+      background-color: $color-font;
+    }
+  }
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  monospace;
+}
