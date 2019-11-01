@@ -10,17 +10,15 @@ import Checkbox from './Checkbox';
 import { Link } from 'react-router-dom';
 import contractPdf from './contract.pdf';
 
-function Proposal({ defaultExpanded, faculties }) {
+function Proposal({ defaultExpanded, paper, faculties }) {
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [tabIndex, setTabIndex] = useState(0);
   const [questionIndex, setQuestionIndex] = useState(2);
 
-  const title = 'Profit maximization';
-
   return (
     <div className={classes('Proposal', expanded && 'expanded')}>
       <div className="titleBar" onClick={() => setExpanded(!expanded)}>
-        <div className="title">{title}</div>
+        <div className="title">{paper.displayName}</div>
         <div className="state">2 researchers signed the contract.</div>
         <FontAwesomeIcon icon={faChevronDown} fixedWidth/>
       </div>
@@ -38,7 +36,7 @@ function Proposal({ defaultExpanded, faculties }) {
             [(
               <div className="tabContent">
                 <LabeledInput className="input" label="Workspace"/>
-                <LabeledInput className="input" label="Objective"/>
+                <LabeledInput className="input" label="Objective" />
                 <LabeledInput className="input" label="Faculties"/>
                 <LabeledInput className="input" label="Staff"/>
                 <LabeledInput className="input" label="Timetable"/>
@@ -92,7 +90,7 @@ function Proposal({ defaultExpanded, faculties }) {
                 }
                 {
                   i === 0 &&
-                  <Link className="propose" to={`/search?keywords=${title}`}>
+                  <Link className="propose" to={`/search?keywords=${paper.displayName}`}>
                     <div className="icon">
                       <FontAwesomeIcon icon={faPlus}/>
                     </div>

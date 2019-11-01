@@ -52,6 +52,8 @@ body {
     }
   }
 
+  ::-webkit-scrollbar { width: 0 !important }
+
   .button {
     padding: .5em .8em;
     text-align: center;

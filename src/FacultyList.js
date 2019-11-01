@@ -22,8 +22,8 @@ function FacultyList({ location }) {
           .then(response => {
             const { faculties, type } = response.data;
             setFaculties(faculties);
-            setSelectedFaculty(null);
-            setSelectedTopic(null);
+            setSelectedFaculty(faculties[0]);
+            setSelectedTopic(keywords);
 
             if (relatedTopics.length === 0) {
               const topics = faculties.flatMap(faculty => faculty.papers.flatMap(paper => paper.topics));

@@ -9,12 +9,22 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 
 function CorporateDetail() {
   const [faculties, setFaculties] = useState([]);
+  const [papers, setPapers] = useState([]);
 
   useEffect(() => {
     axios.get(`/api/faculties?limit=24`)
       .then(response => {
         const faculties = response.data;
         setFaculties(faculties);
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    axios.get(`/api/papers/search?keywords=corporate&limit=5`)
+      .then(response => {
+        const papers = response.data;
+        setPapers(papers);
       })
       .catch(console.error);
   }, []);
@@ -41,8 +51,8 @@ function CorporateDetail() {
           </div>
         </div>
         {
-          new Array(5).fill(0).map((_, i) => (
-            <Proposal faculties={faculties} key={i} defaultExpanded={i === 0}/>
+          papers.map((paper, i) => (
+            <Proposal paper={paper} faculties={faculties} key={i} defaultExpanded={i === 0}/>
           ))
         }
       </div>

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './LabeledInput.scss';
 import { classes } from './utils';
 
-function LabeledInput({ className, label, type = 'text' }) {
-  const [value, setValue] = useState('');
+function LabeledInput({ className, label, type = 'text', defaultValue }) {
+  const [value, setValue] = useState(defaultValue);
 
   return (
     <div className={classes('LabeledInput', className)}>
