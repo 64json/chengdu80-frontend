@@ -4,10 +4,10 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart';
 import React, { useEffect, useState } from 'react';
 import './FacultyDetail.scss';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
-import FacultySummary from './FacultySummary';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import emptyPic from './img/profile.jpg';
+import Graph from './Graph';
 
 function FacultyDetail({ faculty: passedFaculty, expanded, signedIn }) {
   const { id } = useParams();
@@ -72,76 +72,7 @@ function FacultyDetail({ faculty: passedFaculty, expanded, signedIn }) {
       {
         expanded ? (
           <div className="relationContainer">
-            <svg className="linkContainer" width="1080" height="864">
-              <path className="link" d="M 204 136 H 421 V 402 H 638"/>
-              <path className="link anim reverse" d="M 204 136 H 421 V 402 H 638"/>
-
-              <path className="link" d="M 204 728 H 421 V 462 H 638"/>
-              <path className="link anim reverse" d="M 204 728 H 421 V 462 H 638"/>
-
-              <path className="link" d="M 1076 136 H 859 V 402 H 638"/>
-              <path className="link anim" d="M 1076 136 H 859 V 402 H 638"/>
-
-              <path className="link" d="M 1076 728 H 859 V 462 H 638"/>
-              <path className="link anim" d="M 1076 728 H 859 V 462 H 638"/>
-
-              <path className="link" d="M 204 432 H 638"/>
-              <path className="link anim reverse" d="M 204 432 H 638"/>
-
-              <path className="link" d="M 1076 432 H 638"/>
-              <path className="link anim" d="M 1076 432 H 638"/>
-
-              <path className="link" d="M 623 136 V 432"/>
-              <path className="link anim reverse" d="M 623 136 V 432"/>
-
-              <path className="link" d="M 653 136 V 432"/>
-              <path className="link anim" d="M 653 136 V 432"/>
-
-              <path className="link" d="M 623 728 V 432"/>
-              <path className="link anim" d="M 623 728 V 432"/>
-
-              <path className="link" d="M 653 728 V 432"/>
-              <path className="link anim reverse" d="M 653 728 V 432"/>
-            </svg>
-            <div className="column">
-              {
-                [0, 1, 2].map(i => (
-                  <div className="relationWrapper">
-                    <FacultySummary faculty={faculty} key={i}/>
-                    <div className="comment">
-                      Got cited by <b>this guy</b> in <b>this paper</b>.
-                    </div>
-                  </div>
-                ))
-              }
-            </div>
-            <div className="column">
-              {
-                [0, 1, 2].map(i => (
-                  <div className="relationWrapper">
-                    <FacultySummary faculty={faculty} key={i}/>
-                    {
-                      i !== 1 &&
-                      <div className="comment">
-                        Worked with <b>this guy</b> on <b>this paper</b>.
-                      </div>
-                    }
-                  </div>
-                ))
-              }
-            </div>
-            <div className="column">
-              {
-                [0, 1, 2].map(i => (
-                  <div className="relationWrapper">
-                    <FacultySummary faculty={faculty} key={i}/>
-                    <div className="comment">
-                      Cited <b>this guy</b> in <b>this paper</b>.
-                    </div>
-                  </div>
-                ))
-              }
-            </div>
+            <Graph facultyId={faculty._id}/>
           </div>
         ) : (
           <Link className="expand" to={`/faculty/${faculty._id}`}>

@@ -47,9 +47,9 @@ function FacultyList({ location }) {
     <div className={classes('FacultyList')}>
       {
         faculties.length > 0 &&
-        [keywords, ...relatedTopics].map((topic, i) => [(
+        [keywords, ...relatedTopics].map((topic, i) => [faculties.slice(i * 8, (i + 1) * 8).length > 0 && (
           <div className="topicContainer" key={topic}>
-            <div className="topic">{topic.slice(0, 1).toUpperCase() + topic.slice(1)}</div>
+            <div className="topic">{topic.split(' ').map(v => v.slice(0, 1).toUpperCase() + v.slice(1)).join(' ')}</div>
             <div className="facultyContainer">
               {
                 faculties.slice(i * 8, (i + 1) * 8).map(faculty => {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import emptyPic from './img/profile.jpg';
 import './Trending.scss';
 import { withRouter } from 'react-router-dom';
+import { classes } from './utils';
 
 function Trending({ className, history }) {
   const [topics, setTopics] = useState([]);
@@ -79,7 +80,7 @@ function Trending({ className, history }) {
       .force('charge', d3.forceManyBody().strength(-60))
       .force('center', d3.forceCenter(width / 2, height / 2));
 
-    const svg = d3.select('.trending').append('svg')
+    const svg = d3.select('.Trending').append('svg')
       .attr('width', width)
       .attr('height', height);
 
@@ -198,7 +199,7 @@ function Trending({ className, history }) {
   }, [topics.length > 0 && faculties.length > 0]);
 
   return (
-    <div className={`Trending ${className}`}>
+    <div className={classes('Trending', className)}>
       <svg className="defs" width="0" height="0">
         <defs>
           {

@@ -2,7 +2,7 @@
 
 .Checkbox {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
 
   input {
@@ -19,6 +19,8 @@
     border: 2px solid $color-font;
     background-color: $color-font;
     margin-right: 8px;
+    margin-top: 4px;
+    flex-shrink: 0;
   }
 
   .label {

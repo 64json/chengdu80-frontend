@@ -1,0 +1,8 @@
+{
+  "apps": [
+    {
+      "name": "chengdu80-frontend",
+      "script": "npm start"
+    }
+  ]
+}

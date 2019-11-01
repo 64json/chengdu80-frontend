@@ -8,10 +8,12 @@ import './Proposal.scss';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import Checkbox from './Checkbox';
 import { Link } from 'react-router-dom';
+import contractPdf from './contract.pdf';
 
 function Proposal({ defaultExpanded, faculties }) {
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [tabIndex, setTabIndex] = useState(0);
+  const [questionIndex, setQuestionIndex] = useState(2);
 
   const title = 'Profit maximization';
 
@@ -45,22 +47,36 @@ function Proposal({ defaultExpanded, faculties }) {
               </div>
             ), (
               <div className="tabContent">
-                <Checkbox className="question" label="Lorem ipsum blah blah blah magna carta?"/>
-                <Checkbox className="question" label="Lorem ipsum blah blah blah magna carta?"/>
-                <Checkbox className="question" label="Lorem ipsum blah blah blah magna carta?"/>
-                <Checkbox className="question" label="Lorem ipsum blah blah blah magna carta?"/>
-                <Checkbox className="question" label="Lorem ipsum blah blah blah magna carta?"/>
-                <Checkbox className="question" label="Lorem ipsum blah blah blah magna carta?"/>
-                <Checkbox className="question" label="Lorem ipsum blah blah blah magna carta?"/>
-                <Checkbox className="question" label="Lorem ipsum blah blah blah magna carta?"/>
-                <Checkbox className="question" label="Lorem ipsum blah blah blah magna carta?"/>
-                <Checkbox className="question" label="Lorem ipsum blah blah blah magna carta?"/>
+                {
+                  ['1) Two party', '2) Multi-party consortium'].map((q, i) => (
+                    <Checkbox key={q} className="question" label={q} checked={i === questionIndex}
+                              onClick={() => setQuestionIndex(i)}/>
+                  ))
+                }
+                {
+                  [[
+                    ' a) Corporate has non-exclusive rights to use in specified field/territory; no sub-licences',
+                    ' b) Corporate may negotiate further licence to some or all Institution IP',
+                    ' c) Corporate may negotiate for an assignment of some Institution IP',
+                    ' d) Institution has right to use for non-commercial purposes',
+                    ' e) Each party has right to exploit certain results created during the project and takes assignment of those results. Institution has right to use for academic and research purposed, the Corporate for research purposes',
+                    ' f) Contract research: no publication by Institution without Collaborator’s permission',
+                    ' g) Institution has right to use for academic and research purposes',
+                  ], [
+                    ' a) Each member of the consortium owns the IP in the results that it creates. They grant each other party a non-exclusive licence to use those results for the purposes of the project and any other purpose',
+                    ' b) The other parties assign their IP in the results to the lead exploitation party (or the lead exploitation party granted an exclusive licence).',
+                    ' c) Each party takes an assignment of IP in the results that are germane to its core business and exploits those results.',
+                    ' d) Each member of the consortium owns the IP in the results that it creates. They grant each other party a non-exclusive licence to use those results for the purposes of the project only. If any member of the consortium wishes to exploit another’s IP they must negotiate a license or assignment with the owner of that IP.',
+                  ], []][questionIndex].map(q => (
+                    <Checkbox key={q} className="question" label={q}/>
+                  ))
+                }
               </div>
             )][tabIndex]
           }
           <div className="buttonContainer">
             <div className="button">Save</div>
-            <div className="button secondary">Preview</div>
+            <a className="button secondary" href={contractPdf} target="_blank">Preview</a>
             <div className="button secondary">Cancel</div>
           </div>
         </div>

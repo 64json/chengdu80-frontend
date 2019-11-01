@@ -1,0 +1,22 @@
+@import "variables";
+
+.Graph {
+  position: absolute;
+  z-index: 0;
+  display: flex;
+
+  * {
+    transition: none;
+  }
+
+  .node {
+    .facultyCircle {
+      cursor: pointer;
+      transition: transform .2s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
