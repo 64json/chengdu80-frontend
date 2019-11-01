@@ -35,13 +35,13 @@ function Proposal({ defaultExpanded, paper, faculties }) {
           {
             [(
               <div className="tabContent">
-                <LabeledInput className="input" label="Workspace"/>
-                <LabeledInput className="input" label="Objective" />
-                <LabeledInput className="input" label="Faculties"/>
-                <LabeledInput className="input" label="Staff"/>
-                <LabeledInput className="input" label="Timetable"/>
-                <LabeledInput className="input" label="Budget"/>
-                <LabeledInput className="input" label="Dissemination"/>
+                <LabeledInput className="input" label="Workspace" defaultValue="Researcher's university"/>
+                <LabeledInput className="input" label="Objective" defaultValue={paper.description}/>
+                <LabeledInput className="input" label="Faculties" defaultValue=""/>
+                <LabeledInput className="input" label="Staff" defaultValue=""/>
+                <LabeledInput className="input" label="Timetable" defaultValue="Due on August 14, 2020"/>
+                <LabeledInput className="input" label="Budget" defaultValue="$60,000"/>
+                <LabeledInput className="input" label="Dissemination" defaultValue=""/>
               </div>
             ), (
               <div className="tabContent">
@@ -84,7 +84,7 @@ function Proposal({ defaultExpanded, paper, faculties }) {
               <div className={classes('status', i === 4 && 'dim')} key={status}>
                 <div className="label">{status}</div>
                 {
-                  faculties.slice(0, [4, 1, 3, 2, 4][i]).map(faculty => (
+                  faculties.slice([0, 4, 5, 8, 10][i], [4, 5, 8, 10, 14][i]).map(faculty => (
                     <FacultySummary faculty={faculty} key={faculty.id} minimal/>
                   ))
                 }

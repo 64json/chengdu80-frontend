@@ -18,7 +18,7 @@ function FacultyList({ location }) {
     axios.get(`/api/similarities?keywords=${keywords}`)
       .then(response => {
         let relatedTopics = response.data.slice(0, 2);
-        axios.get(`/api/faculties/search?keywords=${keywords}&limit=24&fields={papers}`)
+        axios.get(`/api/faculties/search?keywords=${keywords}&limit=24&fields={papers}&sort=-author_id`)
           .then(response => {
             const { faculties, type } = response.data;
             setFaculties(faculties);

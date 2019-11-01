@@ -12,7 +12,7 @@ function CorporateDetail() {
   const [papers, setPapers] = useState([]);
 
   useEffect(() => {
-    axios.get(`/api/faculties?limit=24`)
+    axios.get(`/api/faculties?limit=24&skip=5&sort=-author_id`)
       .then(response => {
         const faculties = response.data;
         setFaculties(faculties);

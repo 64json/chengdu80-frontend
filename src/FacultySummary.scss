@@ -38,9 +38,20 @@
   }
 
   .info {
+    position: relative;
     flex: 1;
     padding: 8px 12px;
     overflow: hidden;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(rgba($color-card, 0), rgba($color-card, 1));
+    }
 
     .name {
       font-weight: bold;
