@@ -11,7 +11,7 @@ function CorporateDetail() {
   const [faculties, setFaculties] = useState([]);
 
   useEffect(() => {
-    axios.get(`/api/faculties/search?keywords=park&limit=10`)
+    axios.get(`/api/faculties?limit=24`)
       .then(response => {
         const faculties = response.data;
         setFaculties(faculties);

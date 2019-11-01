@@ -2,18 +2,29 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import emptyPic from './img/profile.jpg';
 import './Trending.scss';
+import { withRouter } from 'react-router-dom';
 
-function Trending({ className }) {
+function Trending({ className, history }) {
   const [topics, setTopics] = useState([]);
   const [faculties, setFaculties] = useState([]);
 
   useEffect(() => {
-    axios.get(`/api/papers?limit=5`)
-      .then(response => {
-        const topics = response.data;
-        setTopics(topics);
-      })
-      .catch(console.error);
+    setTopics([{
+      _id: 'strategic_decisions',
+      displayName: 'Strategic Decisions',
+    }, {
+      _id: 'risk_prediction',
+      displayName: 'Risk Prediction',
+    }, {
+      _id: 'supply_management',
+      displayName: 'Supply Management',
+    }, {
+      _id: 'corporate_finance',
+      displayName: 'Corporate Finance',
+    }, {
+      _id: 'inflation_rate',
+      displayName: 'Inflation Rate',
+    }]);
     axios.get(`/api/faculties?limit=40`)
       .then(response => {
         const faculties = response.data;
@@ -32,11 +43,11 @@ function Trending({ className }) {
       id: 'root',
     };
     const topicNodes = topics.map(topic => ({
-      id: topic.id,
+      id: topic._id,
       topic,
     }));
     const facultyNodes = faculties.map(faculty => ({
-      id: faculty.id,
+      id: faculty._id,
       weight: Math.random() * .4 + .8,
       faculty,
     }));
@@ -48,11 +59,11 @@ function Trending({ className }) {
     const links = [
       ...topics.map(topic => ({
         source: 'root',
-        target: topic.id,
+        target: topic._id,
       })),
       ...faculties.map((faculty, i) => ({
-        source: topics[i / 8 | 0].id,
-        target: faculty.id,
+        source: topics[i / 8 | 0]._id,
+        target: faculty._id,
       })),
     ];
 
@@ -112,7 +123,8 @@ function Trending({ className }) {
       .data(topicNodes)
       .join('g')
       .attr('class', 'topicNode')
-      .call(drag(simulation));
+      .call(drag(simulation))
+      .on('click', d => history.push(`/search?keywords=${d.topic.displayName}`));
 
     topicNode.append('circle')
       .attr('stroke-width', 0)
@@ -138,7 +150,8 @@ function Trending({ className }) {
       .data(facultyNodes)
       .join('g')
       .attr('class', 'facultyNode')
-      .call(drag(simulation));
+      .call(drag(simulation))
+      .on('click', d => history.push(`/faculty/${d.faculty._id}`));
 
     facultyNode.append('circle')
       .attr('stroke-width', 2)
@@ -149,7 +162,7 @@ function Trending({ className }) {
       .attr('class', 'facultyCircle')
       .attr('stroke-width', 2)
       .attr('r', d => 20 * d.weight)
-      .attr('fill', d => `url(#${d.faculty.id})`);
+      .attr('fill', d => `url(#${d.faculty._id})`);
 
     simulation.on('tick', () => {
       link
@@ -190,7 +203,7 @@ function Trending({ className }) {
         <defs>
           {
             faculties.map(faculty => (
-              <pattern key={faculty.id} id={faculty.id} height="100%" width="100%"
+              <pattern key={faculty._id} id={faculty._id} height="100%" width="100%"
                        patternContentUnits="objectBoundingBox">
                 <image xlinkHref={emptyPic} preserveAspectRatio="none" width="1" height="1"/>
                 <image xlinkHref={faculty.image_url} preserveAspectRatio="none" width="1" height="1"/>
@@ -203,4 +216,4 @@ function Trending({ className }) {
   );
 }
 
-export default Trending;
+export default withRouter(Trending);

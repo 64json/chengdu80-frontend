@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import './Search.scss';
+import * as queryString from 'query-string';
 
-function Search({ history }) {
+function Search({ history, location }) {
   const [keywords, setKeywords] = useState('');
+  useEffect(() => {
+    const { keywords } = queryString.parse(location.search);
+    setKeywords(keywords);
+  }, [location.search]);
 
   return (
     <input className="Search" type="text" placeholder="Search 'Post-Loan Warning'"

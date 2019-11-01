@@ -61,9 +61,10 @@
       .paperContainer {
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-between;
 
         .paper {
-          width: 50%;
+          width: 49%;
           display: flex;
           align-items: flex-start;
           font-size: $font-small;

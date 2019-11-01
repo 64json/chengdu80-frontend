@@ -7,19 +7,23 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import FacultySummary from './FacultySummary';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import emptyPic from './img/profile.jpg';
 
-function FacultyDetail({ faculty: passedFaculty, expanded }) {
+function FacultyDetail({ faculty: passedFaculty, expanded, signedIn }) {
   const { id } = useParams();
   const [fetchedFaculty, setFetchedFaculty] = useState(null);
 
-  const faculty = passedFaculty || fetchedFaculty || {};
+  const faculty = passedFaculty || fetchedFaculty || {
+    expertises: [],
+    papers: [],
+  };
 
   useEffect(() => {
     if (!id) {
       setFetchedFaculty(null);
       return;
     }
-    axios.get(`/api/faculties/${id}`)
+    axios.get(`/api/faculties/${id}?fields={papers}`)
       .then(response => {
         const faculty = response.data;
         setFetchedFaculty(faculty);
@@ -30,46 +34,38 @@ function FacultyDetail({ faculty: passedFaculty, expanded }) {
   return (
     <div className="FacultyDetail">
       <div className="bio">
-        <div className="photo" style={{ backgroundImage: `url(${faculty.image_url})` }}/>
+        <div className="photo" style={{ backgroundImage: `url(${faculty.image_url || emptyPic})` }}/>
         <div className="info">
           <div className="top">
             <div className="basicInfo">
               <div className="name">{faculty.name}</div>
-              <div className="organization">Georgia Institute of Technology</div>
+              <div className="organization">{faculty.university}</div>
             </div>
-            <div className="button">
-              Propose
-            </div>
+            {
+              signedIn &&
+              <div className="button">
+                Propose
+              </div>
+            }
           </div>
           <div className="row">
             <FontAwesomeIcon className="icon" icon={faHeart} fixedWidth/>
-            <div>
-              Corporate Investment, Risk Management, Interest Rates
+            <div className="expertise">
+              {faculty.expertises.map(v => v.slice(0, 1).toUpperCase() + v.slice(1)).join(', ')}
             </div>
           </div>
           <div className="paperContainer">
-            <div className="paper">
-              <FontAwesomeIcon className="icon" icon={faScroll} fixedWidth/>
-              <div className="paperInfo">
-                <div className="paperTitle">Some Research Paper Title Goes Here</div>
-                <div className="abstract">
-                  What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                  Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                  galley of type and scrambled it to make a type specimen book.
+            {
+              faculty.papers.map(paper => (
+                <div className="paper" key={paper._id}>
+                  <FontAwesomeIcon className="icon" icon={faScroll} fixedWidth/>
+                  <div className="paperInfo">
+                    <div className="paperTitle">{paper.displayName}</div>
+                    <div className="abstract">{paper.description}</div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="paper">
-              <FontAwesomeIcon className="icon" icon={faScroll} fixedWidth/>
-              <div className="paperInfo">
-                <div className="paperTitle">Some Research Paper Title Goes Here</div>
-                <div className="abstract">
-                  What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                  Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                  galley of type and scrambled it to make a type specimen book.
-                </div>
-              </div>
-            </div>
+              ))
+            }
           </div>
         </div>
       </div>

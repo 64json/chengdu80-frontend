@@ -5,6 +5,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart';
 import React from 'react';
 import './FacultySummary.scss';
 import { Link } from 'react-router-dom';
+import emptyPic from './img/profile.jpg';
 
 function FacultySummary({ faculty, selected, onClick, minimal }) {
   const Component = onClick ? (props) => (
@@ -14,30 +15,25 @@ function FacultySummary({ faculty, selected, onClick, minimal }) {
   );
 
   return (
-    <Component key={faculty._id}
-               className={classes('FacultySummary', selected && 'selected', minimal && 'minimal')}>
-      <div className="photo" style={{ backgroundImage: `url(${faculty.image_url})` }}/>
+    <Component className={classes('FacultySummary', selected && 'selected', minimal && 'minimal')}>
+      <div className="photo" style={{ backgroundImage: `url(${faculty.image_url || emptyPic})` }}/>
       <div className="info">
         <div className="name">{faculty.name}</div>
-        <div className="organization">Georgia Institute of Technology</div>
+        <div className="organization">{faculty.university}</div>
         <div className="row">
           <FontAwesomeIcon className="icon" icon={faHeart} fixedWidth/>
-          <div>
-            Corporate Investment, Risk Management, Interest Rates
+          <div className="expertise">
+            {faculty.expertises.map(v => v.slice(0, 1).toUpperCase() + v.slice(1)).join(', ')}
           </div>
         </div>
-        <div className="row">
-          <FontAwesomeIcon className="icon" icon={faScroll} fixedWidth/>
-          <div>
-            Some Research Paper Title Goes Here
-          </div>
-        </div>
-        <div className="row">
-          <FontAwesomeIcon className="icon" icon={faScroll} fixedWidth/>
-          <div>
-            Some Research Paper Title Goes Here
-          </div>
-        </div>
+        {
+          faculty.papers.map(paper => (
+            <div className="row" key={paper._id}>
+              <FontAwesomeIcon className="icon" icon={faScroll} fixedWidth/>
+              <div>{paper.displayName}</div>
+            </div>
+          ))
+        }
       </div>
     </Component>
   );

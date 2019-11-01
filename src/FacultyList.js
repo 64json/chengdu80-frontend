@@ -10,33 +10,52 @@ import * as queryString from 'query-string';
 function FacultyList({ location }) {
   const [faculties, setFaculties] = useState([]);
   const [selectedFaculty, setSelectedFaculty] = useState([]);
+  const [relatedTopics, setRelatedTopics] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState(null);
   const { keywords } = queryString.parse(location.search);
 
   useEffect(() => {
-    axios.get(`/api/faculties/search?keywords=${keywords}&limit=8`)
+    axios.get(`/api/similarities?keywords=${keywords}`)
       .then(response => {
-        const faculties = response.data;
-        setFaculties(faculties);
-        setSelectedFaculty(null);
-        setSelectedTopic(null);
-      })
-      .catch(console.error);
+        let relatedTopics = response.data.slice(0, 2);
+        axios.get(`/api/faculties/search?keywords=${keywords}&limit=24&fields={papers}`)
+          .then(response => {
+            const { faculties, type } = response.data;
+            setFaculties(faculties);
+            setSelectedFaculty(null);
+            setSelectedTopic(null);
+
+            if (relatedTopics.length === 0) {
+              const topics = faculties.flatMap(faculty => faculty.papers.flatMap(paper => paper.topics));
+              const countMap = {};
+              topics.forEach(topic => {
+                if (topic in countMap) {
+                  countMap[topic]++;
+                } else {
+                  countMap[topic] = 1;
+                }
+              });
+              relatedTopics = [...new Set(topics)].sort((a, b) => countMap[b] - countMap[a]).slice(0, 2);
+            }
+            setRelatedTopics(relatedTopics);
+          })
+          .catch(console.error);
+      });
   }, [keywords]);
 
   return (
     <div className={classes('FacultyList')}>
       {
         faculties.length > 0 &&
-        ['Corporate Investment', 'Risk Management', 'Interest Rates'].map(topic => [(
+        [keywords, ...relatedTopics].map((topic, i) => [(
           <div className="topicContainer" key={topic}>
-            <div className="topic">{topic}</div>
+            <div className="topic">{topic.slice(0, 1).toUpperCase() + topic.slice(1)}</div>
             <div className="facultyContainer">
               {
-                faculties.map(faculty => {
+                faculties.slice(i * 8, (i + 1) * 8).map(faculty => {
                   const selected = topic === selectedTopic && faculty === selectedFaculty;
                   return (
-                    <FacultySummary faculty={faculty} selected={selected} onClick={() => {
+                    <FacultySummary key={faculty._id} faculty={faculty} selected={selected} onClick={() => {
                       setSelectedFaculty(selected ? null : faculty);
                       setSelectedTopic(selected ? null : topic);
                     }}/>

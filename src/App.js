@@ -52,7 +52,7 @@ function App() {
               <FacultyList/>
             </Route>
             <Route path="/faculty/:id">
-              <FacultyDetail expanded/>
+              <FacultyDetail expanded signedIn={signedIn}/>
             </Route>
           </Switch>
         </div>
